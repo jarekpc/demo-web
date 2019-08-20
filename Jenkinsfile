@@ -55,5 +55,5 @@ pipeline {
         sh "mvn -B test -f ${POM_FILE}"
       }
     }
-
+}
 }
