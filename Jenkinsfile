@@ -24,7 +24,7 @@ pipeline {
       stages {
            stage('Git Checkout') {
                 steps {
-                   git url: "https://github.com/jarekpc/simple-demo.git", branch: "master"
+                   git url: "https://github.com/jarekpc/demo-web.git", branch: "master"
                 }
            }
 
