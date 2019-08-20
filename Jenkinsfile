@@ -18,47 +18,42 @@ openshift.withCluster() {
 }
 
 pipeline {
-   agent {
-      label 'maven'
-   }
-      stages {
-           stage('Git Checkout') {
-                steps {
-                   git url: "https://github.com/jarekpc/demo-web.git", branch: "master"
-                }
-           }
+  // Use Jenkins Maven slave
+  // Jenkins will dynamically provision this as OpenShift Pod
+  // All the stages and steps of this Pipeline will be executed on this Pod
+  // After Pipeline completes the Pod is killed so every run will have clean
+  // workspace
+  agent {
+    label 'maven'
+  }
 
-           stage('Build'){
-                 steps {
-                   sh "mvn -B clean install -DskipTests=true -f ${POM_FILE}"
-                 }
-           }
+  // Pipeline Stages start here
+  // Requeres at least one stage
+  stages {
 
-             stage('Unit Test'){
-                 steps {
-                   sh "mvn -B test -f ${POM_FILE}"
-                 }
-               }
+    // Checkout source code
+    // This is required as Pipeline code is originally checkedout to
+    // Jenkins Master but this will also pull this same code to this slave
+    stage('Git Checkout') {
+      steps {
+        // Turn off Git's SSL cert check, uncomment if needed
+        // sh 'git config --global http.sslVerify false'
+        git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
+      }
+    }
 
-              stage('Build Container Image'){
-                    steps {
-                            sh """
-                                ls target/*
-                                rm -rf oc-build && mkdir -p oc-build/deployments
-                                for t in \$(echo "jar" | tr ";" "\\n"); do
-                                      cp -rfv ./target/*.\$t oc-build/deployments/ 2> /dev/null || echo "No \$t files"
-                                    done
-                                  """
-                                  binaryBuild(projectName: env.BUILD, buildConfigName: env.APP_NAME, artifactsDirectoryName: "oc-build")
-                                }
-                              }
+    // Run Maven build, skipping tests
+    stage('Build'){
+      steps {
+        sh "mvn -B clean package -DskipTests=true -f ${POM_FILE}"
+      }
+    }
 
-                              stage('Deploy') {
-                                steps {
-                                  tagImage(sourceImageName: env.APP_NAME, sourceImagePath: env.BUILD, toImagePath: env.DEV)
-                                }
-                              }
-
-     }
+    // Run Maven unit tests
+    stage('Unit Test'){
+      steps {
+        sh "mvn -B test -f ${POM_FILE}"
+      }
+    }
 
 }
