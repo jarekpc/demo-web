@@ -38,6 +38,7 @@ pipeline {
       steps {
         // Turn off Git's SSL cert check, uncomment if needed
         // sh 'git config --global http.sslVerify false'
+        echo "Starting Pipeline for ${APPLICATION_SOURCE_REPO}... ${APPLICATION_SOURCE_REF}"
         //git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
         git url: "https://github.com/jarekpc/demo-web.git", branch: "master"
       }
@@ -46,6 +47,7 @@ pipeline {
     // Run Maven build, skipping tests
     stage('Build'){
       steps {
+        echo "Starting Pipeline for ${APP_NAME}..."
         sh "mvn -B clean package -DskipTests=true -f ${POM_FILE}"
       }
     }
@@ -68,7 +70,7 @@ pipeline {
                 cp -rfv ./target/*.\$t oc-build/deployments/ 2> /dev/null || echo "No \$t files"
               done
             """
-
+            echo "Build Container Image ${env.NAMESPACE}..."
             // Build container image using local Openshift cluster
             // Giving all the artifacts to OpenShift Binary Build
             // This places your artifacts into right location inside your S2I image
@@ -76,5 +78,5 @@ pipeline {
             binaryBuild(projectName: env.BUILD, buildConfigName: env.APP_NAME, buildFromPath: "oc-build")
           }
         }
-}
+    }
 }
