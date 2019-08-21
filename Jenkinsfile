@@ -38,7 +38,6 @@ pipeline {
       steps {
         // Turn off Git's SSL cert check, uncomment if needed
         // sh 'git config --global http.sslVerify false'
-        echo "Starting Pipeline for ${APPLICATION_SOURCE_REPO}... ${APPLICATION_SOURCE_REF}"
         //git url: "${APPLICATION_SOURCE_REPO}", branch: "${APPLICATION_SOURCE_REF}"
         git url: "https://github.com/jarekpc/demo-web.git", branch: "master"
       }
