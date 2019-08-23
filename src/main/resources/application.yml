@@ -1,0 +1,24 @@
+server:
+  port: 9090
+
+demo:
+  number: 10
+  user-Name: shazin
+  firstName: Shazin
+  lAsTNamE: Sadakath
+  telephone_number: "0094777329939"
+  workingTime: 8h
+  EMAILADDRESSES:
+    - shazin.sadakath@gmail.com
+    - shazin.swe@gmail.com
+  addresses:
+    - number: "B 22 2/3"
+      city: Colombo
+      street: "Ramya Place"
+      country: "Sri Lanka"
+      zipCode: "01000"
+    - number: "123"
+      city: Kandy
+      street: "Dalada Weediya"
+      country: "Sri Lanka"
+      zipCode: "01332"

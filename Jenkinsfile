@@ -69,7 +69,7 @@ pipeline {
                 cp -rfv ./target/*.\$t oc-build/deployments/ 2> /dev/null || echo "No \$t files"
               done
             """
-            echo "Build Container Image ${env.NAMESPACE}..."
+            echo "Build Container Image ${env.NAMESPACE}...  build ${env.BUILD}...  app-name ${env.APP_NAME} !!!"
             // Build container image using local Openshift cluster
             // Giving all the artifacts to OpenShift Binary Build
             // This places your artifacts into right location inside your S2I image
