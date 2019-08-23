@@ -16,7 +16,7 @@ import java.util.List;
 
 @SpringBootApplication
 @Slf4j
-@EnableConfigurationProperties(DemoApplicationProperties.class)
+//@EnableConfigurationProperties(DemoApplicationProperties.class)
 public class DemoWebApplication {
 
     public static void main(String[] args) {
@@ -25,32 +25,25 @@ public class DemoWebApplication {
 //
 //    @Autowired
 //    DemoApplicationProperties demoApplicationProperties;
-
-    @Bean
-    public ApplicationRunner runner(DemoApplicationProperties myApplicationProperties, Environment environment) {
-        return args -> {
-            List<Address> addresses = Binder.get(environment).bind("demo.address", Bindable.listOf(Address.class)).orElseThrow(IllegalStateException::new);
-            System.out.printf("Demo Addresses : %s\n", addresses);
-
-            // DEMO_ENV_1 Environment Variable
-            System.out.printf("Demo Env 1 : %s\n", environment.getProperty("demo.env[1]"));
-
-            System.out.printf("Demo First Name : %s\n", myApplicationProperties.getFirstName());
-            System.out.printf("Demo Last Name : %s\n", myApplicationProperties.getLastName());
-            System.out.printf("Demo Username : %s\n", myApplicationProperties.getUsername());
-            System.out.printf("Demo Working Time (Hours) : %s\n", myApplicationProperties.getWorkingTime().toHours());
-            System.out.printf("Demo Number : %d\n", myApplicationProperties.getNumber());
-            System.out.printf("Demo Telephone Number : %s\n", myApplicationProperties.getTelephoneNumber());
-            System.out.printf("Demo Email 1 : %s\n", myApplicationProperties.getEmailAddresses().get(0));
-            System.out.printf("Demo Email 2 : %s\n", myApplicationProperties.getEmailAddresses().get(1));
-        };
-    }
-
-//    @Override
-//    public void run(ApplicationArguments args) throws Exception {
-//        log.info(" " + demoApplicationProperties.getNumber());
-//        demoApplicationProperties.getEmailAddresses().forEach(s -> System.out.println(s));
 //
-//        List<Address> addresses = Binder.get(enviroment).
+//    @Bean
+//    public ApplicationRunner runner(DemoApplicationProperties myApplicationProperties, Environment environment) {
+//        return args -> {
+//            List<Address> addresses = Binder.get(environment).bind("demo.address", Bindable.listOf(Address.class)).orElseThrow(IllegalStateException::new);
+//            System.out.printf("Demo Addresses : %s\n", addresses);
+//
+//            // DEMO_ENV_1 Environment Variable
+//            System.out.printf("Demo Env 1 : %s\n", environment.getProperty("demo.env[1]"));
+//
+//            System.out.printf("Demo First Name : %s\n", myApplicationProperties.getFirstName());
+//            System.out.printf("Demo Last Name : %s\n", myApplicationProperties.getLastName());
+//            System.out.printf("Demo Username : %s\n", myApplicationProperties.getUsername());
+//            System.out.printf("Demo Working Time (Hours) : %s\n", myApplicationProperties.getWorkingTime().toHours());
+//            System.out.printf("Demo Number : %d\n", myApplicationProperties.getNumber());
+//            System.out.printf("Demo Telephone Number : %s\n", myApplicationProperties.getTelephoneNumber());
+//            System.out.printf("Demo Email 1 : %s\n", myApplicationProperties.getEmailAddresses().get(0));
+//            System.out.printf("Demo Email 2 : %s\n", myApplicationProperties.getEmailAddresses().get(1));
+//        };
 //    }
+
 }
