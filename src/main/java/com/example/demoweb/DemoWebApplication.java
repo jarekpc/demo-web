@@ -16,7 +16,6 @@ import java.util.List;
 
 @SpringBootApplication
 @Slf4j
-//@EnableConfigurationProperties(DemoApplicationProperties.class)
 public class DemoWebApplication {
 
     public static void main(String[] args) {
